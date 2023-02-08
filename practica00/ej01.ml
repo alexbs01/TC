@@ -1,8 +1,8 @@
 let rec mapdoble f1 f2 l = match l with
-	| h1::h2::t -> (f1 h1)::(f2 h2)::(mapdoble f1 f2 t)
-	| _::[]
-	| [] -> l;;
-	
+	| h1::h2::t -> (f1 h1)::(f2 h2)::(mapdoble f1 f2 t) (* Si hay dos o más, se hace lo que se pide*)
+	| h::[] -> (f1 h)::[] (* Si solo hay un elemento se ejecuta la primera función *)
+	| [] -> l;; (* Si está vacía se retorna la lista vacía *)
+
 (* val mapdoble: ('a -> 'a) -> ('a -> 'a) -> 'a list -> 'a list = <fun>
  *)
 
