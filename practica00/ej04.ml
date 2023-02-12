@@ -2,10 +2,10 @@ type 'a conjunto = Conjunto of 'a list;;
 
 let conjunto_vacio = Conjunto [];;
 
-let conj1 = Conjunto([1;2;3;4;5;6;7;8;9]);;
-let conj1_2 = Conjunto([9;6;3;4;1;2;7;8;5]);;
-let conj2 = Conjunto([0;2;3;10;8]);;
-let conj3 = Conjunto([1;3;8;2]);;
+let c1 = Conjunto([1;2;3;4;5;6;7;8;9]);;
+let c1_2 = Conjunto([9;6;3;4;1;2;7;8;5]);;
+let c2 = Conjunto([0;2;3;10;8]);;
+let c3 = Conjunto([1;3;8;2]);;
 
 (* Hay que espcificar que c es un parámetro de tipo Conjunto, con tail pasa igual *)
 let rec pertenece x = function Conjunto c -> match c with
@@ -14,11 +14,13 @@ let rec pertenece x = function Conjunto c -> match c with
 					then true
 					else pertenece x (Conjunto tail);;
 
+(* Si el elemento no pertenece al conjunto lo añade al principio *)
 let agregar x (Conjunto c) =
 	if pertenece x (Conjunto c)
 	then Conjunto c
 	else Conjunto (x::c);;
 
+(* A partir de una lista, crea un conjunto teniendo en cuenta si no *)
 let conjunto_of_list l =
 	let rec aux (Conjunto c) lista = match lista with
 		| [] -> (Conjunto c)
@@ -87,7 +89,7 @@ let incluido (Conjunto con1) (Conjunto con2) =
 	in aux (Conjunto con1) (Conjunto con2);;
 
 (* Primero comprueba si tienen la misma cardinalidad, si lo tienen comprueba si todos los de con1 pertenecen a con2, retorna
-    true, si hay uno que no pertenece, retorna false *)
+   true, si hay uno que no pertenece, retorna false *)
 let igual (Conjunto con1) (Conjunto con2) = 
 	if (cardinal (Conjunto con1)) = (cardinal (Conjunto con2))
 	then let rec aux (Conjunto c1) (Conjunto c2) = match c1, c2 with
@@ -118,18 +120,3 @@ let producto_cartesiano (Conjunto con1) (Conjunto con2) =
 	in iterarCon1 con1 con2 [];;
 
 let list_of_conjunto = function Conjunto c -> c;;
-
-(*
-pertenece : 'a -> 'a conjunto -> bool
-agregar : 'a -> 'a conjunto -> 'a conjunto
-conjunto_of_list : 'a list -> 'a conjunto
-suprimir : 'a -> 'a conjunto -> 'a conjunto
-cardinal : 'a conjunto -> int
-union : 'a conjunto -> 'a conjunto -> 'a conjunto
-interseccion : 'a conjunto -> 'a conjunto -> 'a conjunto
-diferencia : 'a conjunto -> 'a conjunto -> 'a conjunto
-incluido : 'a conjunto -> 'a conjunto -> bool
-igual : 'a conjunto -> 'a conjunto -> bool
-producto_cartesiano : 'a conjunto -> 'b conjunto -> ('a * 'b) conjunto
-list_of_conjunto : 'a conjunto -> 'a list
-*)
