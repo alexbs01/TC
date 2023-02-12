@@ -30,7 +30,7 @@ let rec post_orden = function
 
 
 let anchura arbol = let 
-    rec aux arbolLista acc = match arbolLista with 
+    rec aux arbolCola acc = match arbolCola with 
         | [] -> acc (* Retorno de lista*)
 		| head::tail -> match head with
 			| Vacio -> aux tail acc (* Cuando el arbol está vacío, retorna la lista *)
@@ -42,11 +42,11 @@ let anchura arbol = let
 (* En la primera iteración tail está vacía, pero se concatenarán los hijos 
    izquierdo y derecho del primer. El nodo padre se concatena a acc que está vacía.
    
-   En la segunda iteración, arbolLista tiene dos elementos, el nodo padre del primer
+   En la segunda iteración, arbolCola tiene dos elementos, el nodo padre del primer
    elemento se concatena a acc, a la cola se le concatenan los hijos izquierdo y 
    derecho de la cabeza.
    
-   En las siguientes iteraciones se guarda en acc la cabecera de arbolLista *)
+   En las siguientes iteraciones se guarda en acc la cabecera de arbolCola *)
 
 in_orden t;; 	(* 10 9 2 3 4 5 1 *)
 pre_orden t;; 	(* 3 2 9 10 5 4 1 *)
