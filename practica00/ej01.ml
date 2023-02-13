@@ -3,7 +3,8 @@ let rec mapdoble f1 f2 l = match l with
 	| h::[] -> (f1 h)::[] (* Si solo hay un elemento se ejecuta la primera función *)
 	| [] -> l;; (* Si está vacía se retorna la lista vacía *)
 
-(* val mapdoble: ('a -> 'a) -> ('a -> 'a) -> 'a list -> 'a list = <fun>
+(* 
+  val mapdoble: ('a -> 'a) -> ('a -> 'a) -> 'a list -> 'a list = <fun>
  *)
 
 (* mapdoble (function x -> x*2) (function x -> "x") [1;2;3;4;5];;
@@ -18,8 +19,8 @@ of type int
 
 *)
 
-(* let y = function x -> 5 in mapdoble y;; 
+(* 
+  let y = function x -> 5 in mapdoble y;; 
 
-- : (int -> int) -> int list -> int list = <fun>
-
+  - : (int -> int) -> int list -> int list = <fun>
 *)
