@@ -17,7 +17,7 @@ let afd2 = af_of_string "0 1;			a b c; 		0; 	1; 		0 1 a; 1 1 b; 1 1 a; 1 0 c;";;
 let afn1 = af_of_string "0 1 2 3; 		a b c; 		0; 	1 3; 	0 1 a; 1 1 b; 1 2 a; 2 0 epsilon; 2 3 epsilon; 2 3 c;";;
 
 (* Autómata no determinista con dos epsilon-transiciones y dos símbolos iguales en el mismo estado *)
-let afn2 = af_of_string "0 1 2 3 4; 		a b c; 		0; 	1 3; 	0 1 a; 1 1 b; 1 2 a; 2 0 epsilon; 2 3 epsilon; 2 3 c; 1 4 a; 4 3 c;";;
+let afn2 = af_of_string "0 1 2 3 4; 	a b c; 		0; 	1 3; 	0 1 a; 1 1 b; 1 2 a; 2 0 epsilon; 2 3 epsilon; 2 3 c; 1 4 a; 4 3 c;";;
 
 (* Autómata no determinista con epsilon-transiciones sin símbolos repetidos en el mismo estado *)
 let afn3 = af_of_string "0 1 2 3 4 5; 	a b c d; 	0; 	1 3 5; 	0 1 a; 0 5 d; 2 2 a; 2 3 epsilon; 2 3 b; 2 3 c; 1 3 a; 5 0 epsilon; 5 2 d;";;
