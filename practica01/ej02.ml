@@ -5,6 +5,7 @@ open Auto;;
 open Ergo;;
 open Graf;;
 
+
 (* -------------------------- *)
 
 let afd1 = af_of_string "0 1 2; 	a b; 	0; 	2;	0 1 a; 1 1 b; 1 2 a;";;
@@ -76,10 +77,12 @@ let afn1 = af_of_string "0 1 2 3; 		a b c; 		0; 	1 3; 	0 1 a; 1 1 b; 1 2 a; 2 0 
 (* Autómata no determinista con dos epsilon-transiciones y dos símbolos iguales en el mismo estado *)
 let afn2 = af_of_string "0 1 2 3 4; 	a b c; 		0; 	1 3; 	0 1 a; 1 1 b; 1 2 a; 2 0 epsilon; 2 3 epsilon; 2 3 c; 1 4 a; 4 3 c;";;
 
+let simbolo_to_string (Auto.Terminal simb) = simb;;
+let autoestado_to_estado (Auto.Estado estado) = estado;;
 
 let equivalentes (Af (estados1, alfabeto, inicial1, trans1, finales1))
                  (Af (estados2, _, inicial2, trans2, finales2)) =
-  let rec mientrasColaNoVacia visitados cola =
+  let rec mientrasColaNoVacia visitados (cola:(Auto.estado * Auto.estado) list) =
     if cola = [] (* Si la cola esta vacía es que se recorrió todo el grafo y es que son idénticos *)
     then true 
     else 
@@ -93,16 +96,16 @@ let equivalentes (Af (estados1, alfabeto, inicial1, trans1, finales1))
           then false
           else 
 
-            let visitados2 = agregar (estadoActual1, estadoActual2) visitados in (* Se agrega el estado actual a los visitados *)
-              let rec aux2 alfab cola2 = (* Se recorre el alfabeto *)
-                if alfab = [] (* Si se recorrió todo el alfabeto, se pasa a la siguiente iteración *)
-                then mientrasColaNoVacia visitados2 (List.tl cola)
-                else 
-
-                  if (transiciona trans1 estadoActual1 (List.hd alfab)) = (transiciona trans2 estadoActual2 (List.hd alfab)) (* Si la transición es la misma, no se agrega a la cola *)
-                  then aux2 (List.tl alfab) cola2
-                  else aux2 (List.tl alfab) (cola2 @ [(transiciona trans1 estadoActual1 (List.hd alfab), transiciona trans2 estadoActual2 (List.hd alfab))] )
-              in aux2 (list_of_conjunto alfabeto) cola
+            let rec aux2 alfab cola2 visitados2 =
+                if alfab = []
+                then mientrasColaNoVacia visitados2 cola2
+                else let (nuevoEstado1, nuevoEstado2) = (transiciona trans1 estadoActual1 (List.hd alfab), transiciona trans2 estadoActual2 (List.hd alfab)) in
+                        print_endline((autoestado_to_estado nuevoEstado1) ^ " " ^ (autoestado_to_estado nuevoEstado2) ^ " " ^ (simbolo_to_string (List.hd alfab)));
+                        if nuevoEstado1 = Estado "NULL" && nuevoEstado2 = Estado "NULL" (* Si ambos estados son NULL, no se agrega a la cola *)
+                        then aux2 (List.tl alfab) cola2 visitados2
+                        else aux2 (List.tl alfab) (List.rev_append (List.rev cola2) [(nuevoEstado1, nuevoEstado2)]) (visitados2)
+                
+            in aux2 (list_of_conjunto alfabeto) cola (agregar (estadoActual1, estadoActual2) (visitados))
 
 in mientrasColaNoVacia conjunto_vacio [(inicial1, inicial2)];;
 
