@@ -68,3 +68,4 @@ let es_afd = function automata ->
 	if es_afne automata || es_afn automata (* Si el autómata tiene epsilon transiciones o tiene no determinismos *)
 	then false
 	else true;;
+

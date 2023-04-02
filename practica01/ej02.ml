@@ -20,13 +20,13 @@ type destino =
 type estado = 
 	| Estado of string;;
 
-let afd1 = af_of_string "0 1 2; 	a b; 	0; 	2;	0 1 a; 1 1 b; 1 2 a;";;
+let afd1 = af_of_string "0 1 2; 	a b; 	0; 	2;	    0 1 a; 1 1 b; 1 2 a;";;
 
-let afd2 = af_of_string "1 2 3;		a b; 	1; 	3; 	1 2 a; 2 2 b; 2 3 a;";;
+let afd2 = af_of_string "1 2 3;		a b; 	1; 	3; 	    1 2 a; 2 2 b; 2 3 a;";;
 
-let afd3 = af_of_string "0 1 2; 	    a b; 	0; 	0 2;    0 1 a; 1 1 a; 1 2 b; 2 2 a; 2 2 b;";;
+let afd3 = af_of_string "0 1 2; 	a b; 	0; 	0 2;    0 1 a; 1 1 a; 1 2 b; 2 2 a; 2 2 b;";;
 
-let afd4 = af_of_string "0 1 2 3;    a b;   0;     0 2 3;     0 1 a; 1 2 b; 2 3 a; 3 3 a; 3 3 b; 1 1 a; 2 2 b;";;
+let afd4 = af_of_string "0 1 2 3;   a b;    0;  0 2 3;  0 1 a; 1 2 b; 2 3 a; 3 3 a; 3 3 b; 1 1 a; 2 2 b;";;
 
 (* Implemente una función equivalentes : Auto.af -> Auto.af -> bool que reciba como
 argumentos dos autómatas finitos y que devuelva true cuando ambos autómatas acepten el mismo
