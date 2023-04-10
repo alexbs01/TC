@@ -13,11 +13,11 @@ esta o no en formal normal de Chomsky. *)
 
 type gic = Gic of (simbolo conjunto * simbolo conjunto * regla_gic conjunto * simbolo);; *)
 
-let gic1 = gic_of_string "S A B;    a b c;  S;  S -> a A;   A -> a b c A | b B;     B -> b c B | a;"
+let gic1 = gic_of_string "S A B;    a b c;  S;  S -> a A;   A -> a b c A | b B;     B -> b c B | a;";;
 
-let gic2 = gic_of_string "S A B;    a b c;  S;  S -> A;   A -> B | c;     B -> A | a | c;"
+let gic2 = gic_of_string "S A B;    a b c;  S;  S -> A;   A -> B | b;     B -> A | a | c;";;
 
-let gic3 = gic_of_string "S A B C;  a b c;  S;  S -> A;   A -> B | c;     B -> A C| C | a | b;     C -> A B;"
+let gic3 = gic_of_string "S A B C;  a b c;  S;  S -> A;   A -> B | c;     B -> A C| C | a | b;     C -> A B;";;
 
 let es_fnc (Gic(_, _, reglas, _)) = 
 	let rec aux = function
