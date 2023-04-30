@@ -36,3 +36,4 @@ let es_fnc (Gic(_, _, reglas, _)) =
 es_fnc gic1;;
 es_fnc gic2;;
 es_fnc gic3;;
+
