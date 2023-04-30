@@ -65,7 +65,7 @@ let es_afn = function Af (_, _, _, (Conjunto transiciones), _) ->
 (* Implemente una función es_afd : Auto.af -> bool que reciba como argumento un autómata
 finito, y que devuelva true si se trata de un autómata totalmente determinista, o false en caso contrario *)
 let es_afd = function automata ->
-	if es_afne automata || es_afn automata (* Si el autómata tiene epsilon transiciones o tiene no determinismos *)
+	if es_afne automata || es_afn automata (* Si el autómata tiene epsilon transiciones o tiene indeterminismos *)
 	then false
 	else true;;
 
