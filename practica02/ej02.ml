@@ -27,7 +27,7 @@ let intercambiarPorNoTerminales simbolo reglas =
         match reg with
             | (Regla_gic(valor, listaSimbolos))::tl -> if List.mem sim listaSimbolos
                                                        then aux (agregar valor acc) sim tl
-                                                       else raise (Failure "No se encuentra el simbolo en la regla")
+                                                       else aux acc sim tl
             | [] -> acc
     in aux conjunto_vacio simbolo (list_of_conjunto reglas);;
 
@@ -49,17 +49,26 @@ let cyk cadena (Gic(_, _, reglas, axioma) as gic) =
         let matriz = Array.make_matrix n n conjunto_vacio in
         let matriz = rellenamosPrimeraFila matriz cadena reglas in (* Rellenamos la primera fila con los símbolos de la cadena *)
         
-        (* for j = 1 to n - 1 do
+        for j = 1 to n - 1 do
             for i = 0 to n - j - 1 do
                 (* let simbolos = ref [] in  *)
-                for k = 0 to j - 1 do
-                    
+                for k = i to i + j - 1 do
+                    let rec iterarReglas reglas =
+                        if List.length reglas > 0
+                        then
+                            match reglas with
+                                | (Regla_gic(valor, listaSimbolos))::tl -> match listaSimbolos with
+                                    | [a; b] -> if (pertenece a matriz.(i).(k)) && (pertenece b matriz.(k + 1).(i + j))
+                                                then matriz.(i).(j) <- union (agregar valor matriz.(i).(j)) matriz.(i).(j)
+                                                else iterarReglas tl
+                                | _ -> iterarReglas tl
+                        else ()
+                    in iterarReglas (list_of_conjunto reglas);
                 done
             done
-        done; *)
+        done;
         (* pertenece axioma matriz.(0).(n);; *)
         matriz;;
 
         
 cyk cadena0 gic0;;
-cyk cadena1 gic0;;
