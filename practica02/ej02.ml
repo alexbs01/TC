@@ -18,9 +18,11 @@ menos un sımbolo, y que la gramatica esta en forma normal de Chomsky. Si no es 
 funcion activara una excepción *)
 
 let gic0 = gic_of_string "S A B C;    a b;  S;  S -> A B | B C;   A -> B A| a;     B -> C C | b; C -> A B | a;";;
+let gic1 = gic_of_string "S A B;    a b c;  S;  S -> a A;   A -> a b c A | b B;     B -> b c B | a;";;
 
 let cadena0 = cadena_of_string "b b a b";;
 let cadena1 = cadena_of_string "b b b b";;
+let cadena2 = cadena_of_string " ";;
 
 let intercambiarPorNoTerminales simbolo reglas =
     let rec aux acc sim reg =
@@ -57,7 +59,7 @@ let cyk cadena (Gic(_, _, reglas, axioma) as gic) =
                         then
                             match reg with
                                 | (Regla_gic(valor, listaSimbolos))::tl -> match listaSimbolos with
-                                    | [a; b] -> if (pertenece a matriz.(k).(i)) && (pertenece b matriz.(i + k).(j - k - 1))
+                                    | [a; b] -> if (pertenece a matriz.(i).(k)) && (pertenece b matriz.(i + k).(j - k - 1))
                                                 then matriz.(j).(i) <- union (agregar valor matriz.(j).(i)) matriz.(j).(i)
                                                 else iterarReglas tl
                                     | [No_terminal _] -> iterarReglas tl
@@ -74,3 +76,6 @@ let cyk cadena (Gic(_, _, reglas, axioma) as gic) =
         
 cyk cadena0 gic0;;
 cyk cadena1 gic0;;
+cyk cadena2 gic0;;
+cyk cadena3 gic0;;
+cyk cadena0 gic1;;
