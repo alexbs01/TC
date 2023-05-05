@@ -5,6 +5,8 @@ open Conj;;
 open Auto;;
 open Ergo;;
 open Graf;;
+open Array;;
+
 
 type simb =
     Terminal of string
@@ -50,17 +52,17 @@ let cyk cadena (Gic(_, _, reglas, axioma) as gic) =
         let matriz = rellenamosPrimeraFila matriz cadena reglas in (* Rellenamos la primera fila con los símbolos de la cadena *)
         
         for j = 1 to n - 1 do
-            for i = 0 to n - j - 1 do
-                (* let simbolos = ref [] in  *)
-                for k = i to i + j - 1 do
-                    let rec iterarReglas reglas =
-                        if List.length reglas > 0
+            for i = 0 to n - j do
+                for k = 0 to j - 1 do
+                    let rec iterarReglas reg =
+                        if List.length reg > 0
                         then
-                            match reglas with
+                            match reg with
                                 | (Regla_gic(valor, listaSimbolos))::tl -> match listaSimbolos with
-                                    | [a; b] -> if (pertenece a matriz.(i).(k)) && (pertenece b matriz.(k + 1).(i + j))
+                                    | [a; b] -> if (pertenece a matriz.(i).(k)) && (pertenece b matriz.(i + k).(j - k))
                                                 then matriz.(i).(j) <- union (agregar valor matriz.(i).(j)) matriz.(i).(j)
                                                 else iterarReglas tl
+                                    | [_] -> iterarReglas tl
                                 | _ -> iterarReglas tl
                         else ()
                     in iterarReglas (list_of_conjunto reglas);
@@ -72,3 +74,4 @@ let cyk cadena (Gic(_, _, reglas, axioma) as gic) =
 
         
 cyk cadena0 gic0;;
+
