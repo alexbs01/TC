@@ -5,8 +5,6 @@ open Conj;;
 open Auto;;
 open Ergo;;
 open Graf;;
-open Array;;
-
 
 type simb =
     Terminal of string
@@ -22,7 +20,7 @@ funcion activara una excepción *)
 let gic0 = gic_of_string "S A B C;    a b;  S;  S -> A B | B C;   A -> B A| a;     B -> C C | b; C -> A B | a;";;
 
 let cadena0 = cadena_of_string "b b a b";;
-let cadena1 = cadena_of_string "b b a c";;
+let cadena1 = cadena_of_string "b b b b";;
 
 let intercambiarPorNoTerminales simbolo reglas =
     let rec aux acc sim reg =
@@ -49,29 +47,30 @@ let cyk cadena (Gic(_, _, reglas, axioma) as gic) =
         let n = List.length cadena in (* Longitud de la cadena *)
         (* Creamos una matriz de n * n con conjuntos vacíos *)
         let matriz = Array.make_matrix n n conjunto_vacio in
-        let matriz = rellenamosPrimeraFila matriz cadena reglas in (* Rellenamos la primera fila con los símbolos de la cadena *)
+        let matriz = rellenamosPrimeraFila matriz cadena reglas in (* Rellenamos la primera fila con los símbolos no termi de la cadena *)
         
-        for j = 1 to n - 1 do
-            for i = 0 to n - j do
-                for k = 0 to j - 1 do
+        for j = 1 to n - 1 do (* Iteramos por filas *)
+            for i = 0 to n - j - 1 do (* Iteramos por columnas *)
+                for k = 0 to j - 2 do 
                     let rec iterarReglas reg =
                         if List.length reg > 0
                         then
                             match reg with
                                 | (Regla_gic(valor, listaSimbolos))::tl -> match listaSimbolos with
-                                    | [a; b] -> if (pertenece a matriz.(i).(k)) && (pertenece b matriz.(i + k).(j - k))
-                                                then matriz.(i).(j) <- union (agregar valor matriz.(i).(j)) matriz.(i).(j)
+                                    | [a; b] -> if (pertenece a matriz.(k).(i)) && (pertenece b matriz.(i + k).(j - k - 1))
+                                                then matriz.(j).(i) <- union (agregar valor matriz.(j).(i)) matriz.(j).(i)
                                                 else iterarReglas tl
-                                    | [_] -> iterarReglas tl
+                                    | [No_terminal _] -> iterarReglas tl
                                 | _ -> iterarReglas tl
                         else ()
                     in iterarReglas (list_of_conjunto reglas);
                 done
             done
         done;
-        (* pertenece axioma matriz.(0).(n);; *)
-        matriz;;
+        pertenece axioma matriz.(n - 1).(0);;
+        (* matriz.(n - 1).(0);; *)
+        (* matriz;; *)
 
         
 cyk cadena0 gic0;;
-
+cyk cadena1 gic0;;
