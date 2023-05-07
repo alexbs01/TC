@@ -74,5 +74,4 @@ let cyk cadena (Gic(_, _, reglas, axioma) as gic) =
 cyk cadena0 gic0;;
 cyk cadena1 gic0;;
 cyk cadena2 gic0;;
-cyk cadena2 gic0;;
 cyk cadena0 gic1;;
