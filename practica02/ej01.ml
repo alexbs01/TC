@@ -8,11 +8,6 @@ open Graf;;
 (* Implemente una funcion es_fnc : Auto.gic -> bool que indique si una gramatica dada
 esta o no en formal normal de Chomsky. *)
 
-
-(* type regla_gic = Regla_gic of (simbolo * simbolo list);;
-
-type gic = Gic of (simbolo conjunto * simbolo conjunto * regla_gic conjunto * simbolo);; *)
-
 let gic0 = gic_of_string "S A B C;    a b;  S;  S -> A B | B C;   A -> B A| a;     B -> C C | b; C -> A B | a;";;
 
 let gic1 = gic_of_string "S A B;    a b c;  S;  S -> a A;   A -> a b c A | b B;     B -> b c B | a;";;

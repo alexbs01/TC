@@ -17,12 +17,12 @@ Lo primero que debe hacer esta funcion es comprobar que la cadena de entrada tie
 menos un sımbolo, y que la gramatica esta en forma normal de Chomsky. Si no es ası, la
 funcion activara una excepción *)
 
-let gic0 = gic_of_string "S A B C;    a b;  S;  S -> A B | B C;   A -> B A| a;     B -> C C | b; C -> A B | a;";;
-let gic1 = gic_of_string "S A B;    a b c;  S;  S -> a A;   A -> a b c A | b B;     B -> b c B | a;";;
+let gic0 = gic_of_string "S A B C;    a b;  S;  S -> A B | B C;   A -> B A| a;     B -> C C | b; C -> A B | a;";; (* En FNC*)
+let gic1 = gic_of_string "S A B;    a b c;  S;  S -> a A;   A -> a b c A | b B;     B -> b c B | a;";; (* No está en FNC *)
 
-let cadena0 = cadena_of_string "b b a b";;
-let cadena1 = cadena_of_string "b b b b";;
-let cadena2 = cadena_of_string " ";;
+let cadena0 = cadena_of_string "b b a b";; (* Se forma con gic0 *)
+let cadena1 = cadena_of_string "b b b b";; (* No se forma con gic0 *)
+let cadena2 = cadena_of_string " ";; 
 
 let intercambiarPorNoTerminales simbolo reglas =
     let rec aux acc sim reg =
@@ -70,12 +70,9 @@ let cyk cadena (Gic(_, _, reglas, axioma) as gic) =
             done
         done;
         pertenece axioma matriz.(n - 1).(0);;
-        (* matriz.(n - 1).(0);; *)
-        (* matriz;; *)
-
         
 cyk cadena0 gic0;;
 cyk cadena1 gic0;;
 cyk cadena2 gic0;;
-cyk cadena3 gic0;;
+cyk cadena2 gic0;;
 cyk cadena0 gic1;;
